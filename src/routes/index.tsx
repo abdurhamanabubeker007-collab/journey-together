@@ -1203,9 +1203,11 @@ function Index() {
             : null
         }
         hocaModu={hocaModu}
+        kiraatGizli={profilAidattan}
         onClose={() => setProfilGoster(null)}
         onDuzenle={(t) => {
           setProfilGoster(null);
+          setDuzenleAidattan(profilAidattan);
           setDuzenlenen(t);
         }}
         onFotoDegistir={(t, fotoUrl) => {
