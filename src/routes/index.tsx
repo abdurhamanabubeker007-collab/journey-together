@@ -446,8 +446,15 @@ function Index() {
   };
 
   const sil = (id: string) => {
+    const mevcut = talebeler.find((t) => t.id === id);
+    // Hafızlık listesinden çıkar; aidat listesinde kalmaya devam etsin.
+    if (mevcut && !mevcut.aidatHaric) {
+      void talebeGuncelle(id, { aidatSadece: true });
+      return;
+    }
     void talebeSil(id);
   };
+
 
   const kiraatGunToggle = (t: Talebe, gun: number) => {
     const key = String(seciliHafta);
