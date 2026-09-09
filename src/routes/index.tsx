@@ -355,6 +355,8 @@ function Index() {
 
   const [duzenlenen, setDuzenlenen] = useState<Talebe | null>(null);
   const [profilGoster, setProfilGoster] = useState<Talebe | null>(null);
+  const [profilAidattan, setProfilAidattan] = useState(false);
+  const [duzenleAidattan, setDuzenleAidattan] = useState(false);
   const [hocaDuzenle, setHocaDuzenle] = useState(false);
   const [hocaTaslak, setHocaTaslak] = useState(hoca);
   const [seciliHafta, setSeciliHafta] = useState<number>(() => haftaBaslastik());
@@ -751,7 +753,10 @@ function Index() {
             <AidatPanel
               talebeler={aidatTalebeler}
               hocaModu={hocaModu}
-              onTalebe={(t) => setProfilGoster(t)}
+              onTalebe={(t) => {
+                setProfilAidattan(true);
+                setProfilGoster(t);
+              }}
               grupFiltre={grupFiltre}
             />
             {hocaModu && (
@@ -868,7 +873,10 @@ function Index() {
                     <TableCell className="min-w-0 px-1 py-2 font-medium sm:px-4 sm:py-3">
                       <button
                         type="button"
-                        onClick={() => setProfilGoster(t)}
+                        onClick={() => {
+                          setProfilAidattan(false);
+                          setProfilGoster(t);
+                        }}
                         className="group flex w-full min-w-0 items-center gap-1 text-left text-xs hover:text-primary sm:gap-2 sm:text-sm"
                       >
                         <span className="shrink-0 scale-75 sm:scale-100">
@@ -901,7 +909,10 @@ function Index() {
                             size="icon"
                             variant="ghost"
                             className="h-6 w-6 sm:h-8 sm:w-8"
-                            onClick={() => setDuzenlenen(t)}
+                            onClick={() => {
+                              setDuzenleAidattan(false);
+                              setDuzenlenen(t);
+                            }}
                           >
                             <Pencil className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                           </Button>
@@ -976,6 +987,7 @@ function Index() {
         )}
         onTalebe={(t) => {
           setVermediAcik(false);
+          setProfilAidattan(false);
           setProfilGoster(t);
         }}
       />
@@ -988,6 +1000,7 @@ function Index() {
         haftaEtiketi={haftaEtiket(seciliHafta)}
         onTalebe={(t) => {
           setRaporAcik(false);
+          setProfilAidattan(false);
           setProfilGoster(t);
         }}
       />
@@ -1176,6 +1189,7 @@ function Index() {
 
       <DuzenleDiyalog
         talebe={duzenlenen}
+        kiraatGizli={duzenleAidattan}
         onClose={() => setDuzenlenen(null)}
         onKaydet={(p) => {
           if (duzenlenen) guncelle(duzenlenen.id, p);
@@ -1190,9 +1204,11 @@ function Index() {
             : null
         }
         hocaModu={hocaModu}
+        kiraatGizli={profilAidattan}
         onClose={() => setProfilGoster(null)}
         onDuzenle={(t) => {
           setProfilGoster(null);
+          setDuzenleAidattan(profilAidattan);
           setDuzenlenen(t);
         }}
         onFotoDegistir={(t, fotoUrl) => {
@@ -1238,6 +1254,7 @@ function TalebeAvatar({
 function ProfilDiyalog({
   talebe,
   hocaModu,
+  kiraatGizli = false,
   onClose,
   onDuzenle,
   onFotoDegistir,
@@ -1245,6 +1262,7 @@ function ProfilDiyalog({
 }: {
   talebe: Talebe | null;
   hocaModu: boolean;
+  kiraatGizli?: boolean;
   onClose: () => void;
   onDuzenle: (t: Talebe) => void;
   onFotoDegistir: (t: Talebe, fotoUrl: string) => void;
@@ -1328,9 +1346,11 @@ function ProfilDiyalog({
           </div>
           <div className="text-center">
             <div className="text-lg font-semibold">{talebe.isim}</div>
-            <div className="text-xs text-muted-foreground">
-              {t("sayfa")} {talebe.sayfa} · {cuzHesapla(talebe.sayfa)}{t("cuzTam")}
-            </div>
+            {!kiraatGizli && (
+              <div className="text-xs text-muted-foreground">
+                {t("sayfa")} {talebe.sayfa} · {cuzHesapla(talebe.sayfa)}{t("cuzTam")}
+              </div>
+            )}
           </div>
           {hocaModu && talebe.fotoUrl && (
             <Button
@@ -1560,10 +1580,12 @@ function IlerlemeRozet({ sayfa }: { sayfa: number }) {
 
 function DuzenleDiyalog({
   talebe,
+  kiraatGizli = false,
   onClose,
   onKaydet,
 }: {
   talebe: Talebe | null;
+  kiraatGizli?: boolean;
   onClose: () => void;
   onKaydet: (p: Partial<Talebe>) => void;
 }) {
@@ -1601,10 +1623,14 @@ function DuzenleDiyalog({
   };
 
   const kaydet = () => {
-    const sayfa = sayfaDogrula(sayfaTaslak);
-    if (sayfa === null) return;
     const temizIsim = isim.trim().slice(0, 60);
     if (!temizIsim) return;
+    if (kiraatGizli) {
+      onKaydet({ isim: temizIsim });
+      return;
+    }
+    const sayfa = sayfaDogrula(sayfaTaslak);
+    if (sayfa === null) return;
     onKaydet({ isim: temizIsim, sayfa, yon });
   };
 
@@ -1632,6 +1658,7 @@ function DuzenleDiyalog({
             />
           </div>
 
+          {!kiraatGizli && (
           <div className="space-y-1.5">
             <Label>{t("kiraatYonu")}</Label>
             <Select
@@ -1659,11 +1686,15 @@ function DuzenleDiyalog({
               </SelectContent>
             </Select>
           </div>
+          )}
 
+          {!kiraatGizli && (
           <p className="text-xs text-muted-foreground">
             {t("kiraatGunIpucu")}
           </p>
+          )}
 
+          {!kiraatGizli && (
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1.5">
               <Label className="flex items-center gap-1.5">
@@ -1694,7 +1725,8 @@ function DuzenleDiyalog({
               </div>
             </div>
           </div>
-          {sayfaHata && <p className="text-xs text-destructive">{sayfaHata}</p>}
+          )}
+          {sayfaHata && !kiraatGizli && <p className="text-xs text-destructive">{sayfaHata}</p>}
 
         </div>
 
