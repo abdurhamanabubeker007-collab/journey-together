@@ -609,7 +609,6 @@ function Index() {
                 <DropdownMenuSeparator />
                 <DropdownMenuLabel>Gruplar</DropdownMenuLabel>
                 {([
-                  ["hepsi", "Tümü"],
                   ["seviye1", "1. Seviye"],
                   ["seviye2", "2. Seviye"],
                   ["hazirlik", "Hazırlık"],
