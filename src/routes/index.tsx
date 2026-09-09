@@ -355,6 +355,8 @@ function Index() {
 
   const [duzenlenen, setDuzenlenen] = useState<Talebe | null>(null);
   const [profilGoster, setProfilGoster] = useState<Talebe | null>(null);
+  const [profilAidattan, setProfilAidattan] = useState(false);
+  const [duzenleAidattan, setDuzenleAidattan] = useState(false);
   const [hocaDuzenle, setHocaDuzenle] = useState(false);
   const [hocaTaslak, setHocaTaslak] = useState(hoca);
   const [seciliHafta, setSeciliHafta] = useState<number>(() => haftaBaslastik());
@@ -751,7 +753,10 @@ function Index() {
             <AidatPanel
               talebeler={aidatTalebeler}
               hocaModu={hocaModu}
-              onTalebe={(t) => setProfilGoster(t)}
+              onTalebe={(t) => {
+                setProfilAidattan(true);
+                setProfilGoster(t);
+              }}
               grupFiltre={grupFiltre}
             />
             {hocaModu && (
