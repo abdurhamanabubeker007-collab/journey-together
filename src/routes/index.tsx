@@ -1580,10 +1580,12 @@ function IlerlemeRozet({ sayfa }: { sayfa: number }) {
 
 function DuzenleDiyalog({
   talebe,
+  kiraatGizli = false,
   onClose,
   onKaydet,
 }: {
   talebe: Talebe | null;
+  kiraatGizli?: boolean;
   onClose: () => void;
   onKaydet: (p: Partial<Talebe>) => void;
 }) {
@@ -1621,10 +1623,14 @@ function DuzenleDiyalog({
   };
 
   const kaydet = () => {
-    const sayfa = sayfaDogrula(sayfaTaslak);
-    if (sayfa === null) return;
     const temizIsim = isim.trim().slice(0, 60);
     if (!temizIsim) return;
+    if (kiraatGizli) {
+      onKaydet({ isim: temizIsim });
+      return;
+    }
+    const sayfa = sayfaDogrula(sayfaTaslak);
+    if (sayfa === null) return;
     onKaydet({ isim: temizIsim, sayfa, yon });
   };
 
@@ -1652,6 +1658,7 @@ function DuzenleDiyalog({
             />
           </div>
 
+          {!kiraatGizli && (
           <div className="space-y-1.5">
             <Label>{t("kiraatYonu")}</Label>
             <Select
@@ -1679,11 +1686,15 @@ function DuzenleDiyalog({
               </SelectContent>
             </Select>
           </div>
+          )}
 
+          {!kiraatGizli && (
           <p className="text-xs text-muted-foreground">
             {t("kiraatGunIpucu")}
           </p>
+          )}
 
+          {!kiraatGizli && (
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1.5">
               <Label className="flex items-center gap-1.5">
@@ -1714,7 +1725,8 @@ function DuzenleDiyalog({
               </div>
             </div>
           </div>
-          {sayfaHata && <p className="text-xs text-destructive">{sayfaHata}</p>}
+          )}
+          {sayfaHata && !kiraatGizli && <p className="text-xs text-destructive">{sayfaHata}</p>}
 
         </div>
 
