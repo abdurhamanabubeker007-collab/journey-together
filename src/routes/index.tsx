@@ -873,7 +873,10 @@ function Index() {
                     <TableCell className="min-w-0 px-1 py-2 font-medium sm:px-4 sm:py-3">
                       <button
                         type="button"
-                        onClick={() => setProfilGoster(t)}
+                        onClick={() => {
+                          setProfilAidattan(false);
+                          setProfilGoster(t);
+                        }}
                         className="group flex w-full min-w-0 items-center gap-1 text-left text-xs hover:text-primary sm:gap-2 sm:text-sm"
                       >
                         <span className="shrink-0 scale-75 sm:scale-100">
@@ -906,7 +909,10 @@ function Index() {
                             size="icon"
                             variant="ghost"
                             className="h-6 w-6 sm:h-8 sm:w-8"
-                            onClick={() => setDuzenlenen(t)}
+                            onClick={() => {
+                              setDuzenleAidattan(false);
+                              setDuzenlenen(t);
+                            }}
                           >
                             <Pencil className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                           </Button>
@@ -981,6 +987,7 @@ function Index() {
         )}
         onTalebe={(t) => {
           setVermediAcik(false);
+          setProfilAidattan(false);
           setProfilGoster(t);
         }}
       />
@@ -993,6 +1000,7 @@ function Index() {
         haftaEtiketi={haftaEtiket(seciliHafta)}
         onTalebe={(t) => {
           setRaporAcik(false);
+          setProfilAidattan(false);
           setProfilGoster(t);
         }}
       />
