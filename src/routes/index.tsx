@@ -1254,6 +1254,7 @@ function TalebeAvatar({
 function ProfilDiyalog({
   talebe,
   hocaModu,
+  kiraatGizli = false,
   onClose,
   onDuzenle,
   onFotoDegistir,
@@ -1261,6 +1262,7 @@ function ProfilDiyalog({
 }: {
   talebe: Talebe | null;
   hocaModu: boolean;
+  kiraatGizli?: boolean;
   onClose: () => void;
   onDuzenle: (t: Talebe) => void;
   onFotoDegistir: (t: Talebe, fotoUrl: string) => void;
@@ -1344,9 +1346,11 @@ function ProfilDiyalog({
           </div>
           <div className="text-center">
             <div className="text-lg font-semibold">{talebe.isim}</div>
-            <div className="text-xs text-muted-foreground">
-              {t("sayfa")} {talebe.sayfa} · {cuzHesapla(talebe.sayfa)}{t("cuzTam")}
-            </div>
+            {!kiraatGizli && (
+              <div className="text-xs text-muted-foreground">
+                {t("sayfa")} {talebe.sayfa} · {cuzHesapla(talebe.sayfa)}{t("cuzTam")}
+              </div>
+            )}
           </div>
           {hocaModu && talebe.fotoUrl && (
             <Button
