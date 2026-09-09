@@ -1189,6 +1189,7 @@ function Index() {
 
       <DuzenleDiyalog
         talebe={duzenlenen}
+        kiraatGizli={duzenleAidattan}
         onClose={() => setDuzenlenen(null)}
         onKaydet={(p) => {
           if (duzenlenen) guncelle(duzenlenen.id, p);
