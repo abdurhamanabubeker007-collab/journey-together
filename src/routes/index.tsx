@@ -120,6 +120,7 @@ const SOZLUK = {
     iptal: "İptal",
     kaydet: "Kaydet",
     kapat: "Kapat",
+    sil: "Sil",
     talebeEkle: "Talebe Ekle",
     haftaRaporu: "Haftanın Raporu",
     haftaninRaporu: "Haftanın Raporu",
