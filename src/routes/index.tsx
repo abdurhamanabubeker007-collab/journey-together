@@ -1345,7 +1345,18 @@ function ProfilDiyalog({
             )}
           </div>
           <div className="text-center">
-            <div className="text-lg font-semibold">{talebe.isim}</div>
+            <div className="flex items-center justify-center gap-2">
+              <div className="text-lg font-semibold">{talebe.isim}</div>
+              {hocaModu && (
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => onDuzenle(talebe)}
+                >
+                  <Pencil className="h-4 w-4" /> Düzenleme
+                </Button>
+              )}
+            </div>
             {!kiraatGizli && (
               <div className="text-xs text-muted-foreground">
                 {t("sayfa")} {talebe.sayfa} · {cuzHesapla(talebe.sayfa)}{t("cuzTam")}
