@@ -593,7 +593,7 @@ function Index() {
                 <DropdownMenuLabel>Bölümler</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {([
-                  ["hafizlik", "SIEC JIGJIGA KURSU"],
+                  ["hafizlik", "Hafızlık takip paneli"],
                   ["aidat", "Aidat takip paneli"],
                 ] as const).map(([k, etiket]) => (
                   <DropdownMenuItem
