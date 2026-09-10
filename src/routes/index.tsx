@@ -103,7 +103,8 @@ type Dil = "tr";
 const SOZLUK = {
   tr: {
     baslik: "SİEC JİGJİGA KURSU",
-    altBaslik: "SIEC JIGJIGA KURSU",
+    altBaslikHafizlik: "Hafızlık takip paneli",
+    altBaslikAidat: "Aidat takip paneli",
     girisYap: "Giriş Yap",
     girisYapKisa: "Giriş yap",
     hocaefendiGirisi: "Hocaefendi Girişi",
