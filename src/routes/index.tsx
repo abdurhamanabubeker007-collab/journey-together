@@ -642,7 +642,7 @@ function Index() {
 
             </DropdownMenu>
             <span className="hidden text-sm font-medium text-muted-foreground sm:inline">
-              {sekme === "aidat" ? "Aidat takip paneli" : "SIEC JIGJIGA KURSU"}
+              {sekme === "aidat" ? tr("altBaslikAidat") : tr("altBaslikHafizlik")}
             </span>
           </div>
           <div className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary sm:h-20 sm:w-20">
@@ -653,7 +653,7 @@ function Index() {
               {tr("baslik")}
             </h1>
             <p className="mt-2 text-base text-muted-foreground sm:text-xl">
-              {tr("altBaslik")}
+              {sekme === "aidat" ? tr("altBaslikAidat") : tr("altBaslikHafizlik")}
             </p>
           </div>
         </header>
