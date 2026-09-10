@@ -773,7 +773,7 @@ function Index() {
         <div className="mb-3 grid grid-cols-2 gap-3">
           <OzetKart etiket={tr("toplamTalebe")} deger={ozet.toplam} />
           <OzetKart
-            etiket={`${tr(seciliDers === "kuran" ? "dersKuranKisa" : seciliDers === "fikih" ? "dersFikihKisa" : "dersHadisKisa")} (${tr("haftaGunUzun")[seciliGun]})`}
+            etiket={`${tr(seciliDers === "kuran" ? "dersKuranKisa" : seciliDers === "fikih" ? "dersFikihKisa" : "dersHadisKisa")} (${tr("haftaGun")[seciliGun]})`}
             deger={`${ozet.kiraatSayi}/${ozet.toplam}`}
             onClick={() => setVermediAcik(true)}
           />
@@ -847,7 +847,7 @@ function Index() {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        {tr("haftaGunUzun").map((isim, i) => (
+                        {tr("haftaGun").map((isim, i) => (
                           <SelectItem key={i} value={String(i)} className="text-sm">
                             {tr("ders")} · {isim}
                           </SelectItem>
@@ -981,7 +981,7 @@ function Index() {
       <VermediDiyalog
         acik={vermediAcik}
         onClose={() => setVermediAcik(false)}
-        gunAdi={tr("haftaGunUzun")[seciliGun]}
+        gunAdi={tr("haftaGun")[seciliGun]}
         talebeler={hafizTalebeler.filter(
           (t) => !getDersGunler(t, seciliDers, seciliHafta).includes(seciliGun),
         )}
