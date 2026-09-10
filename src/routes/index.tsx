@@ -120,6 +120,7 @@ const SOZLUK = {
     iptal: "İptal",
     kaydet: "Kaydet",
     kapat: "Kapat",
+    sil: "Sil",
     talebeEkle: "Talebe Ekle",
     haftaRaporu: "Haftanın Raporu",
     haftaninRaporu: "Haftanın Raporu",
@@ -916,14 +917,6 @@ function Index() {
                           >
                             <Pencil className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                           </Button>
-                          <Button
-                            size="icon"
-                            variant="ghost"
-                            className="h-6 w-6 text-destructive hover:text-destructive sm:h-8 sm:w-8"
-                            onClick={() => sil(t.id)}
-                          >
-                            <Trash2 className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                          </Button>
                         </div>
                       </TableCell>
                     )}
@@ -1217,6 +1210,11 @@ function Index() {
         onNotKaydet={(t, patch) => {
           void talebeGuncelle(t.id, patch);
         }}
+        onSil={() => {
+          const id = profilGoster?.id;
+          setProfilGoster(null);
+          if (id) sil(id);
+        }}
       />
     </div>
     </DilContext.Provider>
@@ -1259,6 +1257,7 @@ function ProfilDiyalog({
   onDuzenle,
   onFotoDegistir,
   onNotKaydet,
+  onSil,
 }: {
   talebe: Talebe | null;
   hocaModu: boolean;
@@ -1270,6 +1269,7 @@ function ProfilDiyalog({
     t: Talebe,
     patch: Partial<Pick<Talebe, "telefon" | "notlar">>,
   ) => void;
+  onSil: () => void;
 }) {
   const t = useT();
   const [yukleniyor, setYukleniyor] = useState(false);
@@ -1410,6 +1410,15 @@ function ProfilDiyalog({
           </Button>
           {hocaModu && (
             <>
+              <Button
+                variant="destructive"
+                onClick={() => {
+                  onSil();
+                  onClose();
+                }}
+              >
+                <Trash2 className="h-4 w-4" /> {t("sil")}
+              </Button>
               <Button
                 variant="outline"
                 onClick={() => onDuzenle(talebe)}
