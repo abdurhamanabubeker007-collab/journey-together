@@ -1218,6 +1218,11 @@ function Index() {
         onNotKaydet={(t, patch) => {
           void talebeGuncelle(t.id, patch);
         }}
+        onSil={() => {
+          const id = profilGoster?.id;
+          setProfilGoster(null);
+          if (id) sil(id);
+        }}
       />
     </div>
     </DilContext.Provider>
