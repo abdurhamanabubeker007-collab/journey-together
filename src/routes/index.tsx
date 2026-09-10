@@ -1431,12 +1431,6 @@ function ProfilDiyalog({
                 <Trash2 className="h-4 w-4" /> {t("sil")}
               </Button>
               <Button
-                variant="outline"
-                onClick={() => onDuzenle(talebe)}
-              >
-                <UserIcon className="h-4 w-4" /> {t("isimVeIlerleme")}
-              </Button>
-              <Button
                 onClick={() => {
                   onNotKaydet(talebe, {
                     telefon: telefon.trim(),
