@@ -1260,6 +1260,7 @@ function ProfilDiyalog({
   onDuzenle,
   onFotoDegistir,
   onNotKaydet,
+  onSil,
 }: {
   talebe: Talebe | null;
   hocaModu: boolean;
@@ -1271,6 +1272,7 @@ function ProfilDiyalog({
     t: Talebe,
     patch: Partial<Pick<Talebe, "telefon" | "notlar">>,
   ) => void;
+  onSil: () => void;
 }) {
   const t = useT();
   const [yukleniyor, setYukleniyor] = useState(false);
